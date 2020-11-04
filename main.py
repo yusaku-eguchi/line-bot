@@ -29,6 +29,7 @@ app.logger.setLevel(logging.INFO)
 
 YOUR_CHANNEL_ACCESS_TOKEN = os.environ["LINE_CHANNEL_ACCESS_TOKEN"]
 YOUR_CHANNEL_SECRET = os.environ["LINE_CHANNEL_SECRET"]
+USER_ID = '12971135132294'
 
 line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(YOUR_CHANNEL_SECRET)
@@ -62,6 +63,9 @@ def reply_message(event):
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text='こちらこーるばっく処理からお送りします:'+event.message.text))
+    line_bot_api.push_message(
+    USER_ID,
+    TextSendMessage(text='ぷっしゅめっせーじです。やあ!'))
 
 
 if __name__ == "__main__":
