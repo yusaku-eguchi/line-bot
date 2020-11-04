@@ -1,6 +1,6 @@
 # coding: UTF-8
 import urllib.request, urllib.error
-from bs4 import BeautifulSoup
+
 import csv
 from datetime import datetime
 from flask import Flask, request, abort
