@@ -3,13 +3,54 @@ import urllib.request, urllib.error
 from bs4 import BeautifulSoup
 import csv
 from datetime import datetime
+from flask import Flask, request, abort
+from linebot import(
+    LineBotApi, WebhookHandler
+)
+
+from linebot.exceptions import(
+    InvalidSignatureError
+)
+from linebot.models import(
+    MessageEvent, TextMessage, TextSendMessag
+)
+
+app = Flask(__name__)
+
+YOUR_CHANNEL_ACCESS_TOKEN = os.environ["YOUR_CHANNEL_ACCESS_TOKEN"]
+YOUR_CHANNEL_SECRET = os.environ["YOUR_CHANNEL_SECRET"]
+
+line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
+handler = WebhookHandler(YOUR_CHANNEL_SECRET)
+
+
+@app.route("/")
+def hello_world():
+   return "hello world!"
+
+@app.route("/callback", methods=['POST'])
+def callback():
+   # get X-Line-Signature header value
+   signature = request.headers['X-Line-Signature']
+
+   # get request body as text
+   body = request.get_data(as_text=True)
+   app.logger.info("Request body: " + body)
+
+   # handle webhook body
+   try:
+       handler.handle(body, signature)
+   except InvalidSignatureError:
+       print("Invalid signature. Please check your channel access token/channel secret.")
+       abort(400)
+
+   return 'OK'
+
 
 
 
 # 現在時刻を年、月、日、分、秒で取得します
 time_ = datetime.now().strftime("%Y/%m/%d %H:%M:%S")
-# 1カラム目に時間を挿入します
-csv_list.append(time_)
 
 # アクセスするURL
 url = "http://www.nikkei.com/markets/kabu/"
@@ -43,5 +84,7 @@ for tag in span:
     except:
         # パス→何も処理を行わない
         pass
-
-
+    
+if __name__ == "__main__":
+   port = int(os.getenv("PORT"))
+   app.run(host="0.0.0.0", port=port)
