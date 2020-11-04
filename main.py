@@ -27,8 +27,8 @@ app = Flask(__name__)
 app.logger.addHandler(logging.StreamHandler(sys.stdout))
 app.logger.setLevel(logging.INFO)
 
-YOUR_CHANNEL_ACCESS_TOKEN = '7daN8C8fvz/Mb614TwGrXSIPOA/rNYopIQHWtfpKWn6StPCG+/gVS0JhO38sMIx04OGqjS21IbKwXazaETM4BIQPjjNfzGNour2cUO7etCbYdHwGA5pbeLFmDBhgAHaujyFcJeUkKY0LGz7nMTAf3gdB04t89/1O/w1cDnyilFU='
-YOUR_CHANNEL_SECRET = '13f10b72997410fab6886825485b561c'
+YOUR_CHANNEL_ACCESS_TOKEN = ["YOUR_CHANNEL_ACCESS_TOKEN"]
+YOUR_CHANNEL_SECRET = ["YOUR_CHANNEL_SECRET"]
 
 line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(YOUR_CHANNEL_SECRET)
