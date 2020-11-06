@@ -67,14 +67,7 @@ def reply_message(event):
     messages = TextSendMessage(text=f"こんにちは😁\n\n"
                                     f"最近はいかがお過ごしでしょうか?")
     line_bot_api.push_message(user_id, messages=messages)
-
-@handler.add(FollowEvent)
-def on_follow(event):
-
-    user_id = event.source.user_id
-
-
-
+    
 if __name__ == "__main__":
     port = int(os.getenv("PORT"))
     app.run(host="0.0.0.0", port=port)
