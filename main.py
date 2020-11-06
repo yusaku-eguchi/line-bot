@@ -63,9 +63,16 @@ def reply_message(event):
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text='こちらこーるばっく処理からお送りします:'+event.message.text))
-    line_bot_api.push_message(
-    USER_ID,
-    TextSendMessage(text='ぷっしゅめっせーじです。やあ!'))
+    user_id = event.source.user_id
+    messages = TextSendMessage(text=f"こんにちは😁\n\n"
+                                    f"最近はいかがお過ごしでしょうか?")
+    line_bot_api.push_message(user_id, messages=messages)
+
+@handler.add(FollowEvent)
+def on_follow(event):
+
+    user_id = event.source.user_id
+
 
 
 if __name__ == "__main__":
