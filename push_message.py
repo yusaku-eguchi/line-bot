@@ -2,11 +2,18 @@ from linebot import LineBotApi
 from linebot.models import TextSendMessage
 import os
 
-YOUR_CHANNEL_ACCESS_TOKEN = '7daN8C8fvz/Mb614TwGrXSIPOA/rNYopIQHWtfpKWn6StPCG+/gVS0JhO38sMIx04OGqjS21IbKwXazaETM4BIQPjjNfzGNour2cUO7etCbYdHwGA5pbeLFmDBhgAHaujyFcJeUkKY0LGz7nMTAf3gdB04t89/1O/w1cDnyilFU='
-USER_ID = '12971135132294'
+# リモートリポジトリに"ご自身のチャネルのアクセストークン"をpushするのは、避けてください。
+# 理由は、そのアクセストークンがあれば、あなたになりすまして、プッシュ通知を送れてしまうからです。
+LINE_CHANNEL_ACCESS_TOKEN = os.environ['LINE_CHANNEL_ACCESS_TOKEN']
+line_bot_api = LineBotApi(LINE_CHANNEL_ACCESS_TOKEN)
 
-line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
 
-line_bot_api.push_message(
-    USER_ID,
-    TextSendMessage(text='ぷっしゅめっせーじです。やあ!'))
+def main():
+    user_id = "U940230221923689c61fbaed1fee34d09"
+
+    messages = TextSendMessage(text=f"こんにちは😁\n\n"
+                                    f"最近はいかがお過ごしでしょうか?")
+    line_bot_api.push_message(user_id, messages=messages)
+
+if __name__ == "__main__":
+    main()
