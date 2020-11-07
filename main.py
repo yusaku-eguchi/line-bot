@@ -76,6 +76,9 @@ def reply_message(event):
 #友達追加時にuser情報保存
 def add_user(event):
     profile = line_bot_api.get_profile(event.source.user_id)
+    user_id = profile.user_id
+    display_name = profile.display_name
+    status_message = profile.status_message
     db_connect = mysql.connector.connect(
         host = os.environ["DB_HOSTNAME"],
         port = '3306',
@@ -87,7 +90,7 @@ def add_user(event):
     db_curs = db_connect.cursor()
 
     #データ挿入SQL
-    sql = 'Insert INTO user(user_id, display_name, status_message) values(profile.user_id, profile.display_name, profile.status_message)'
+    sql = 'Insert INTO user(user_id, display_name, status_message) values(user_id, display_name, status_message)'
     db_curs.execute(sql)
 
     db_connect.commit()
