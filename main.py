@@ -91,7 +91,7 @@ def add_user(event):
 
     #データ挿入SQL
     sql = "INSERT INTO heroku_610747411f1dc55.users(user_id, name, status_message) VALUES (%s, %s, %s)", (user_id, display_name, status_message)
-    db_curs.execute(sql)
+    db_curs.execute("INSERT INTO heroku_610747411f1dc55.users(user_id, name, status_message) VALUES (%s, %s, %s)", (user_id, display_name, status_message))
 
     db_connect.commit()
     db_connect.close()
