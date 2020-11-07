@@ -110,6 +110,7 @@ def delete_user(event):
         password = os.environ["DB_PASSWORD"],
         database = os.environ["DB_NAME"]
     )
+    print("接続完了")
     #カーソル呼出し
     db_curs = db_connect.cursor()
 
