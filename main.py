@@ -27,6 +27,7 @@ import sys
 
 import AddUser
 import DeleteUser
+import ReplyMessage
 
 app = Flask(__name__)
 
@@ -65,15 +66,8 @@ def callback():
    return 'OK'
 
 @handler.add(MessageEvent, message=TextMessage)
-def reply_message(event):
-    # reply のテスト。
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text='こちらこーるばっく処理からお送りします:'+event.message.text))
-    user_id = event.source.user_id
-    messages = TextSendMessage(text=f"こんにちは😁\n\n"
-                                    f"最近はいかがお過ごしでしょうか?")
-    line_bot_api.push_message(user_id, messages=messages)
+def reply(event):
+    ReplyMessage.reply_message(event)
 
 
 @handler.add(FollowEvent)
