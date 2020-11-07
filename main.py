@@ -34,7 +34,6 @@ app.logger.setLevel(logging.INFO)
 
 YOUR_CHANNEL_ACCESS_TOKEN = os.environ["LINE_CHANNEL_ACCESS_TOKEN"]
 YOUR_CHANNEL_SECRET = os.environ["LINE_CHANNEL_SECRET"]
-USER_ID = '12971135132294'
 
 line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(YOUR_CHANNEL_SECRET)
