@@ -20,10 +20,7 @@ line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(YOUR_CHANNEL_SECRET)
 
 def reply_message(event):
-    # reply のテスト。
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text='こちらこーるばっく処理からお送りします:'+event.message.text))
+    # 日経平均株価の送信
     user_id = event.source.user_id
     NikkeiHeikin = getNikkeiHeikin.get_nikkei_heikin()
     messages = TextSendMessage(text="現在の日経平均株価は\n" + NikkeiHeikin + "円\nです")
