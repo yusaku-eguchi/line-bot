@@ -13,8 +13,11 @@ from linebot.exceptions import(
     InvalidSignatureError
 )
 from linebot.models import(
-    MessageEvent, TextMessage, TextSendMessage
+    MessageEvent, TextMessage, TextSendMessage, FollowEvent, UnfollowEvent
 )
+
+#mysql接続用
+import mysql.connector
 
 #ログ出力のため
 import logging
@@ -67,7 +70,49 @@ def reply_message(event):
     messages = TextSendMessage(text=f"こんにちは😁\n\n"
                                     f"最近はいかがお過ごしでしょうか?")
     line_bot_api.push_message(user_id, messages=messages)
-    
+
+
+@handler.add(FollowEvent)
+#友達追加時にuser情報保存
+def add_user(event):
+    profile = line_bot_api.get_profile(event.source.user_id)
+    db_connect = mysql.connector.connect(
+        host = os.environ["DB_HOSTNAME"]
+        port = '3306'
+        user = os.environ["DB_USERNAME"]
+        password = os.environ["DB_PASSWORD"]
+        database = os.environ["DB_NAME"]
+    )
+    #カーソル呼出し
+    db_curs = db_connect.cursor()
+
+    #データ挿入SQL
+    sql = 'Insert INTO user(user_id, display_name, status_message) values(profile.user_id, profile.display_name, profile.status_message)'
+    db_curs.execute(sql)
+
+    db_connect.commit()
+    db_connect.close()
+
+@handler.add(UnfollowEvent)
+#友達登録解除時にuser情報削除
+def delete_user(event):
+    profile = line_bot_api.get_profile(event.source.user_id)
+    db_connect = mysql.connector.connect(
+        host = os.environ["DB_HOSTNAME"]
+        port = '3306'
+        user = os.environ["DB_USERNAME"]
+        password = os.environ["DB_PASSWORD"]
+        database = os.environ["DB_NAME"]
+    )
+    #カーソル呼出し
+    db_curs = db_connect.cursor()
+
+    #データ削除SQL
+    sql = 'DELETE FROM user WHERE user_id = profile.user_id'
+    db_curs.execute(sql)
+
+
+
 if __name__ == "__main__":
     port = int(os.getenv("PORT"))
     app.run(host="0.0.0.0", port=port)
