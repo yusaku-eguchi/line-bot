@@ -25,8 +25,8 @@ import mysql.connector
 import logging
 import sys
 
-import add_user
-import delete_user
+import AddUser
+import DeleteUser
 
 app = Flask(__name__)
 
@@ -79,12 +79,12 @@ def reply_message(event):
 @handler.add(FollowEvent)
 #友達追加時にuser情報保存
 def forrow(event):
-    add_user.add_user(event)
+    AddUser.add_user(event)
 
 @handler.add(UnfollowEvent)
 #友達登録解除時にuser情報削除
 def unfollow(event):
-    delete_user.delele_user(event)
+    DeleteUser.delele_user(event)
 
 if __name__ == "__main__":
     port = int(os.getenv("PORT"))
