@@ -99,10 +99,7 @@ def add_user(event):
 @handler.add(UnfollowEvent)
 #友達登録解除時にuser情報削除
 def delete_user(event):
-    profile = line_bot_api.get_profile(event.source.user_id)
-    user_id = profile.user_id
-    display_name = profile.display_name
-    status_message = profile.status_message
+    user_id = event.source.user_id
     db_connect = mysql.connector.connect(
         host = os.environ["DB_HOSTNAME"],
         port = '3306',
