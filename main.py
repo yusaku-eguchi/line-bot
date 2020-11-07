@@ -76,7 +76,8 @@ def reply_message(event):
 
 @handler.add(FollowEvent)
 #友達追加時にuser情報保存
-add_user.add_user(event)
+def forrow():
+    add_user.add_user(event)
 
 @handler.add(UnfollowEvent)
 #友達登録解除時にuser情報削除
