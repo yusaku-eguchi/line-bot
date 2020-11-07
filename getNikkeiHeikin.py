@@ -31,9 +31,8 @@ def get_nikkei_heikin():
                 # mkc-stock_pricesが設定されているのでtagで囲まれた文字列を.stringであぶり出します
                 nikkei_heikin = tag.string
                 # 摘出が完了したのでfor分を抜けます
-                return nikkei_heikin
                 break
         except:
             # パス→何も処理を行わない
             pass
-
+    return nikkei_heikin    
