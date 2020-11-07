@@ -96,6 +96,30 @@ def add_user(event):
     db_connect.commit()
     db_connect.close()
 
+@handler.add(UnfollowEvent)
+#友達登録解除時にuser情報削除
+def delete_user(event):
+    profile = line_bot_api.get_profile(event.source.user_id)
+    user_id = profile.user_id
+    display_name = profile.display_name
+    status_message = profile.status_message
+    db_connect = mysql.connector.connect(
+        host = os.environ["DB_HOSTNAME"],
+        port = '3306',
+        user = os.environ["DB_USERNAME"],
+        password = os.environ["DB_PASSWORD"],
+        database = os.environ["DB_NAME"]
+    )
+    #カーソル呼出し
+    db_curs = db_connect.cursor()
+
+    #データ削除SQL
+    sql = "DELETE FROM heroku_610747411f1dc55.users WHERE user_id = %s", (user_id)
+    db_curs.execute("DELETE FROM heroku_610747411f1dc55.users WHERE user_id = %s", (user_id,))
+
+    db_connect.commit()
+    db_connect.close()
+
 if __name__ == "__main__":
     port = int(os.getenv("PORT"))
     app.run(host="0.0.0.0", port=port)
