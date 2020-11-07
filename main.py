@@ -84,7 +84,7 @@ def forrow(event):
 @handler.add(UnfollowEvent)
 #友達登録解除時にuser情報削除
 def unfollow(event):
-    DeleteUser.delele_user(event)
+    DeleteUser.delete_user(event)
 
 if __name__ == "__main__":
     port = int(os.getenv("PORT"))
