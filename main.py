@@ -76,6 +76,9 @@ def reply_message(event):
 #友達追加時にuser情報保存
 def add_user(event):
     profile = line_bot_api.get_profile(event.source.user_id)
+    user_id = profile.user_id
+    display_name = profile.display_name
+    status_message = profile.status_message
     db_connect = mysql.connector.connect(
         host = os.environ["DB_HOSTNAME"],
         port = '3306',
