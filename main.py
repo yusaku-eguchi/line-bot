@@ -77,10 +77,10 @@ def reply_message(event):
 def add_user(event):
     profile = line_bot_api.get_profile(event.source.user_id)
     db_connect = mysql.connector.connect(
-        host = os.environ["DB_HOSTNAME"]
-        port = '3306'
-        user = os.environ["DB_USERNAME"]
-        password = os.environ["DB_PASSWORD"]
+        host = os.environ["DB_HOSTNAME"],
+        port = '3306',
+        user = os.environ["DB_USERNAME"],
+        password = os.environ["DB_PASSWORD"],
         database = os.environ["DB_NAME"]
     )
     #カーソル呼出し
@@ -98,10 +98,10 @@ def add_user(event):
 def delete_user(event):
     profile = line_bot_api.get_profile(event.source.user_id)
     db_connect = mysql.connector.connect(
-        host = os.environ["DB_HOSTNAME"]
-        port = '3306'
-        user = os.environ["DB_USERNAME"]
-        password = os.environ["DB_PASSWORD"]
+        host = os.environ["DB_HOSTNAME"],
+        port = '3306',
+        user = os.environ["DB_USERNAME"],
+        password = os.environ["DB_PASSWORD"],
         database = os.environ["DB_NAME"]
     )
     #カーソル呼出し
