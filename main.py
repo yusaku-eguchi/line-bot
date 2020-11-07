@@ -90,7 +90,7 @@ def add_user(event):
     db_curs = db_connect.cursor()
 
     #データ挿入SQL
-    sql = 'Insert INTO heroku_610747411f1dc55.user(user_id, display_name, status_message) values(user_id, display_name, status_message)'
+    sql = "INSERT INTO heroku_610747411f1dc55.users(user_id, name, status_message) VALUES (%s, %s, %s)", (user_id, display_name, status_message)
     db_curs.execute(sql)
 
     db_connect.commit()
@@ -100,6 +100,9 @@ def add_user(event):
 #友達登録解除時にuser情報削除
 def delete_user(event):
     profile = line_bot_api.get_profile(event.source.user_id)
+    user_id = profile.user_id
+    display_name = profile.display_name
+    status_message = profile.status_message
     db_connect = mysql.connector.connect(
         host = os.environ["DB_HOSTNAME"],
         port = '3306',
@@ -111,8 +114,11 @@ def delete_user(event):
     db_curs = db_connect.cursor()
 
     #データ削除SQL
-    sql = 'DELETE FROM user WHERE user_id = profile.user_id'
+    sql = "DELETE FROM user WHERE user_id = %s", (user_id)
     db_curs.execute(sql)
+
+    db_connect.commit()
+    db_connect.close()
 
 
 
