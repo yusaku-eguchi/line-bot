@@ -25,6 +25,6 @@ def reply_message(event):
         event.reply_token,
         TextSendMessage(text='こちらこーるばっく処理からお送りします:'+event.message.text))
     user_id = event.source.user_id
-    NikkeiHeikin = str(getNikkeiHeikin.get_nikkei_heikin)
+    NikkeiHeikin = getNikkeiHeikin.get_nikkei_heikin()
     messages = TextSendMessage(text="現在の日経平均株価は\n" + NikkeiHeikin)
     line_bot_api.push_message(user_id, messages=messages)

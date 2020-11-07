@@ -30,5 +30,4 @@ def get_nikkei_heikin():
         except:
             # パス→何も処理を行わない
             pass
-    print(nikkei_heikin)
     return(nikkei_heikin)  
