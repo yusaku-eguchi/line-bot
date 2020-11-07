@@ -23,6 +23,8 @@ import mysql.connector
 import logging
 import sys
 
+import add_user
+
 app = Flask(__name__)
 
 # ログを標準出力へ。heroku logs --tail で確認するためです。
@@ -74,27 +76,7 @@ def reply_message(event):
 
 @handler.add(FollowEvent)
 #友達追加時にuser情報保存
-def add_user(event):
-    profile = line_bot_api.get_profile(event.source.user_id)
-    user_id = profile.user_id
-    display_name = profile.display_name
-    status_message = profile.status_message
-    db_connect = mysql.connector.connect(
-        host = os.environ["DB_HOSTNAME"],
-        port = '3306',
-        user = os.environ["DB_USERNAME"],
-        password = os.environ["DB_PASSWORD"],
-        database = os.environ["DB_NAME"]
-    )
-    #カーソル呼出し
-    db_curs = db_connect.cursor()
-
-    #データ挿入SQL
-    sql = "INSERT INTO heroku_610747411f1dc55.users(user_id, name, status_message) VALUES (%s, %s, %s)", (user_id, display_name, status_message)
-    db_curs.execute("INSERT INTO heroku_610747411f1dc55.users(user_id, name, status_message) VALUES (%s, %s, %s)", (user_id, display_name, status_message))
-
-    db_connect.commit()
-    db_connect.close()
+add_user.add_user(event)
 
 @handler.add(UnfollowEvent)
 #友達登録解除時にuser情報削除
